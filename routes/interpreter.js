@@ -1,11 +1,9 @@
 const express = require("express");
+const isAuth = require("../middleware/isAuth");
 
 const router = express.Router();
 const interpreterController = require("../controllers/interpreter");
 
-router.get("/posts", interpreterController.getPosts);
-router.post("/posts", interpreterController.createPost);
-
-router.post("/run", interpreterController.run);
+router.post("/run", isAuth, interpreterController.run);
 
 module.exports = router;

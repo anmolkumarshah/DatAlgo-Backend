@@ -6,7 +6,7 @@ exports.createFeedback = async (req, res, next) => {
   if (!error.isEmpty()) {
     return res
       .status(422)
-      .json({ message: "validation failed", error: error.array() });
+      .json({ message: "validation failed", desc: error.array(), error: true });
   }
   const email = req.body.email;
   const description = req.body.description;
@@ -20,11 +20,12 @@ exports.createFeedback = async (req, res, next) => {
     res.status(200).json({
       message: "Success",
       data: result,
+      error: false,
     });
   } catch (e) {
     res.status(400).json({
-      message: "Error",
-      data: e,
+      error: true,
+      message: e,
     });
   }
 };
