@@ -2,9 +2,9 @@ const jwt = require("jsonwebtoken");
 
 module.exports = (req, res, next) => {
   const token = req.get("Authorization");
-  console.log("token" + token);
+
   try {
-    const decoadedToken = jwt.verify(token, "datalgo_secret_string");
+    const decoadedToken = jwt.verify(token, `${process.env.JWT_SECRET}`);
     if (!decoadedToken) {
       return res
         .status(401)

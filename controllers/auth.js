@@ -60,7 +60,7 @@ exports.login = async (req, res, next) => {
         email: user.email,
         userId: user._id.toString(),
       },
-      "datalgo_secret_string",
+      `${process.env.JWT_SECRET}`,
       { expiresIn: "1hr" }
     );
 

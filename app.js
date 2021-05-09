@@ -24,12 +24,18 @@ app.use("/feedback", feedbackRoutes);
 app.use("/auth", authRoutes);
 
 mongoose
-  .connect("mongodb+srv://anmol:datalgo@cluster0.2f4m6.mongodb.net/dalalgo")
+  .connect(
+    `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.2f4m6.mongodb.net/${process.env.MONGO_DATABASE}`
+  )
   .then((result) => {
-    app.listen(8080, () => {
-      console.info("listening to 8080");
+    const port = process.env.PORT || 8080;
+    app.listen(port, () => {
+      console.info(`listening to ${port}`);
     });
   })
   .catch((err) => {
     console.error(err);
+    res
+      .status(404)
+      .json({ error: true, message: "error in connecting to database" });
   });
